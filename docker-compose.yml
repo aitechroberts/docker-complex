@@ -20,7 +20,7 @@ services:
     image: aiwanderer/multi-server
     volumes: 
       - /home/node/app/node_modules
-      - ./server:/home/node/app
+      - ${WEBAPP_STORAGE_HOME}/server:/home/node/app
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -35,12 +35,12 @@ services:
       - WDS_SOCKET_PORT=0
     volumes: 
       - /home/node/app/node_modules
-      - ./client:/home/node/app
+      - ${WEBAPP_STORAGE_HOME}/client:/home/node/app
   worker:
     image: aiwanderer/multi-worker
     volumes: 
       - /home/node/app/node_modules
-      - ./worker:/home/node/app
+      - ${WEBAPP_STORAGE_HOME}/worker:/home/node/app
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
