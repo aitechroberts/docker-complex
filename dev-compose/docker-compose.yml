@@ -5,7 +5,10 @@ services:
     depends_on:
       - api
       - client
-    image: aiwanderer/multi-nginx
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+      # Map localhost port to container port
     ports:
       - '3050:80'
   postgres:
@@ -17,7 +20,9 @@ services:
   api:
     depends_on:
       - postgres
-    image: aiwanderer/multi-server
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.dev
     volumes: 
       - /home/node/app/node_modules
       - ./server:/home/node/app
@@ -30,14 +35,18 @@ services:
       - PGPASSWORD=postgres_password
       - PGPORT=5432
   client:
-    image: aiwanderer/multi-client
+    build: 
+      context: ./client
+      dockerfile: Dockerfile.dev
     environment:
       - WDS_SOCKET_PORT=0
     volumes: 
       - /home/node/app/node_modules
       - ./client:/home/node/app
   worker:
-    image: aiwanderer/multi-worker
+    build: 
+      context: ./worker
+      dockerfile: Dockerfile.dev
     volumes: 
       - /home/node/app/node_modules
       - ./worker:/home/node/app
