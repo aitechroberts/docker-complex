@@ -7,7 +7,7 @@ services:
       - client
     image: aiwanderer/multi-nginx
     ports:
-      - '80:80'
+      - '443:80'
   postgres:
     image: "postgres:latest"
     environment:

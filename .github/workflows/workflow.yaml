@@ -6,7 +6,7 @@ on:
   workflow_dispatch: 
 
 env:
-  AZURE_WEBAPP_NAME: 'docker-react-complex'
+  AZURE_WEBAPP_NAME: 'multi-docker-react'
 
 jobs:
   build-and-push:
