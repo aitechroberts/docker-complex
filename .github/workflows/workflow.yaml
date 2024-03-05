@@ -32,6 +32,8 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/multi-client:latest
       
+      - name: check working directory
+        run pwd
       - name: Build and Push Nginx
         uses: docker/build-push-action@v5
         with:
