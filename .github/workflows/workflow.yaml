@@ -58,26 +58,27 @@ jobs:
           file: ./worker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/multi-worker:latest
-      
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: false
-          environment: azurecloud
-          allow-no-subscriptions: false
-          audience: api://AzureADTokenExchange
-          auth-type: SERVICE_PRINCIPAL
-          # Command to create service principal in az cli
-          # az ad sp create-for-rbac --name udemy-app1-sp --role Contributor --scopes /subscriptions/3ec02c9b-5e63-46a0-ba5e-f0c2ed5505fb --sdk-auth | jq '{clientId: .clientId, clientSecret: .clientSecret, tenantId: .tenantId, subscriptionId: .subscriptionId}'
 
-      - name: Deploy to Azure App Service
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: .
+# Really can't deploy to with CI/CD. Maybe run the az webapp config set command?
+  # deploy:
+  #   needs: build-and-push
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Login to Azure
+  #       uses: azure/login@v1
+  #       with:
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #         enable-AzPSSession: false
+  #         environment: azurecloud
+  #         allow-no-subscriptions: false
+  #         audience: api://AzureADTokenExchange
+  #         auth-type: SERVICE_PRINCIPAL
+  #         # Command to create service principal in az cli
+  #         # az ad sp create-for-rbac --name udemy-app1-sp --role Contributor --scopes /subscriptions/3ec02c9b-5e63-46a0-ba5e-f0c2ed5505fb --sdk-auth | jq '{clientId: .clientId, clientSecret: .clientSecret, tenantId: .tenantId, subscriptionId: .subscriptionId}'
+
+  #     - name: Deploy to Azure App Service
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: ${{ env.AZURE_WEBAPP_NAME }}
+  #         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  #         package: .
