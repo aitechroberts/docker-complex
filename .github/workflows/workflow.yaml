@@ -30,8 +30,8 @@ jobs:
       - name: Build and Push Client
         uses: docker/build-push-action@v5
         with:
-          context: complex/client/
-          file: ./Dockerfile
+          context: ./client
+          file: ./client/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/multi-client:latest
       
@@ -39,7 +39,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./nginx
-          file: ./Dockerfile
+          file: ./nginx/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/multi-nginx:latest
 
@@ -47,7 +47,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./server
-          file: ./Dockerfile
+          file: ./server/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/multi-server:latest
 
@@ -55,7 +55,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./worker
-          file: ./Dockerfile
+          file: ./worker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/multi-worker:latest
       
