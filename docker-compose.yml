@@ -1,19 +1,12 @@
 version: '3'
 services:
-  nginx:
-    restart: always
-    depends_on:
-      - api
-      - client
-    image: aiwanderer/multi-nginx
-    ports:
-      - '80:80'
-  postgres:
-    image: "postgres:latest"
+  client:
+    image: aiwanderer/multi-client
     environment:
-      - POSTGRES_PASSWORD=postgres_password
-  redis:
-    image: "redis:latest"
+      - WDS_SOCKET_PORT=0
+    volumes: 
+      - /home/node/app/node_modules
+      - ${WEBAPP_STORAGE_HOME}/client:/home/node/app
   api:
     depends_on:
       - postgres
@@ -29,13 +22,20 @@ services:
       - PGDATABASE=postgres
       - PGPASSWORD=postgres_password
       - PGPORT=5432
-  client:
-    image: aiwanderer/multi-client
+  nginx:
+    restart: always
+    depends_on:
+      - api
+      - client
+    image: aiwanderer/multi-nginx
+    ports:
+      - '80:80'
+  postgres:
+    image: "postgres:latest"
     environment:
-      - WDS_SOCKET_PORT=0
-    volumes: 
-      - /home/node/app/node_modules
-      - ${WEBAPP_STORAGE_HOME}/client:/home/node/app
+      - POSTGRES_PASSWORD=postgres_password
+  redis:
+    image: "redis:latest"
   worker:
     image: aiwanderer/multi-worker
     volumes: 
